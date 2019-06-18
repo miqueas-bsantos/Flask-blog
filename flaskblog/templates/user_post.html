@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Posted by {{current_user.username}} {{posts.total}}</h1>
+    {% for post in posts.items %}
+        <article class="media content-section">
+          <img src="{{url_for('static', filename='profiles_pics/' + post.author.image_file)}}" 
+               alt="User Image" 
+               class="rounded article-image p-1">
+          <div class="media-body ml-1">
+            <div class="article-metadata">
+              <p nclass="mr-2">{{ post.author.username }}</p>
+              <small class="text-muted">{{ post.date_posted.strftime('%d/%m/%Y')}}</small>
+            </div>
+            <h2><a class="article-title" href="{{url_for('post', post_id=post.id)}}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if page_num == posts.page %}
+        <a href="{{url_for('user_post', page=page_num, username=current_user.username)}}" class="btn-info btn">
+          {{page_num}}
+        </a>
+        {% else %}
+        <a href="{{url_for('user_post', page=page_num, username=current_user.username)}}" class="btn-outline-info btn">
+          {{page_num}}
+        </a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}

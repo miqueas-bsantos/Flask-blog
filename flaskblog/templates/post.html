@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+        <article class="media content-section position-relative">
+          <img src="{{url_for('static', filename='profiles_pics/' + post.author.image_file)}}" 
+               alt="User Image" 
+               class="rounded article-image p-1">
+          <div class="media-body ml-1">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%d/%m/%Y')}}</small>
+            </div>
+            <h2 class="article-title">{{ post.title }}</h2>
+            <div class="overflow-auto mb-5" style="max-height: 200px; max-width: 500px; overflow-y: auto">{{ post.content }}</div>
+          </div>
+          <div class="p-1 position-absolute btn-group-update w-100">
+            {% if current_user == post.author %}
+                <a href="{{url_for('update_post', post_id=post.id)}}" class="btn btn-outline-info w-25">Edit</a>
+                <button data-toggle="modal" data-target="#delete" 
+                   class="btn btn-outline-danger w-25">Delete</button>
+            {% endif %}
+          </div>
+        </article>
+        <!-- Modal -->
+        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="deleteLabel">Are sure about that ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body text-center">
+                    <form action="{{url_for('delete_post', post_id=post.id)}}" method="POST">
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+{% endblock content %}
