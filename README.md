@@ -19,7 +19,6 @@ This repo contains some sample code to deploy a simple (but complete) Flask appl
    
    expected body
     {
-        "user": 'your@email.com',
 		"title" : "Miqueas ASDASD",
 		"content": "miqueas@teste.com RETSADASD"
     }
