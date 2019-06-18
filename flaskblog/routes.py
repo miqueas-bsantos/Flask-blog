@@ -177,7 +177,7 @@ def user_post_id(post_id):
 @app.route("/posts/create", methods=['POST'])
 def user_posts_create():
     data = json.loads(request.data)
-    user = User.query.filter_by(data['user'])
+    user = User.query.filter_by(email=data['user'])
     print(data['title'], data['content'])
     if data['title'] and data['content'] and data['user']:
         post = Post(title=data['title'], content=data['content'], author=user)
