@@ -1,7 +1,7 @@
 import secrets
 import os
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json, make_response
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateForm, PostForm
 from flaskblog.models import User, Post
 from flaskblog import app, bcrypt, db
@@ -165,7 +165,7 @@ def user_create():
 @app.route("/posts", methods=['GET'])
 def user_posts():
     user = Post.query.all()
-    response = simplejson.dumps(user, for_json=True)
+    response = make_response(simplejson.dumps(user, for_json=True), 200)
     return response
 
 @app.route("/posts/<int:post_id>", methods=['GET'])
