@@ -179,7 +179,7 @@ def user_posts_create():
     data = json.loads(request.data)
     print(data['title'], data['content'], data['user'])
     if data['title'] and data['content'] and data['user']:
-        user = User.query.filter_by(email=data['user'])
+        user = User.query.filter_by(email=data['user']).first()
         post = Post(title=data['title'], content=data['content'], author=user)
         db.session.add(post)
         db.session.commit()
